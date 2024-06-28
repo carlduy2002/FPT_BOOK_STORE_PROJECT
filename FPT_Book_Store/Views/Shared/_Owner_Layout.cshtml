@@ -1,0 +1,75 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Accounts> SignInManager
+@inject UserManager<Accounts> UserManager
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>FPT_Book_Store</title>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+        <link rel="icon" type="image/x-icon" href="~/image/logo.ico" asp-append-version="true">
+        <link rel="stylesheet"
+            href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
+         <!-- font awesome cdn link  -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <script src="https://kit.fontawesome.com/df8e5c3257.js" crossorigin="anonymous"></script>
+    </head>
+
+
+<style>
+
+    #body-main-admin{
+        
+        background-color: slategray;
+    }
+
+    #body-main-owner{
+        
+        background-color: antiquewhite;
+    }
+
+</style>
+
+@if (User.IsInRole("Admin")){
+
+
+
+    <body id="body-main-admin">
+
+        <div class="container" >
+            <main role="main" class="pb-3">
+            @RenderBody()
+            </main>
+        </div>
+       
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    </body>
+
+}
+else if ((User.IsInRole("Owner"))){
+
+    <body id="body-main-owner">
+
+        <div class="container" >
+            <main role="main" class="pb-3">
+            @RenderBody()
+            </main>
+        </div>
+       
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    </body>
+}
+
+
+
+</html>

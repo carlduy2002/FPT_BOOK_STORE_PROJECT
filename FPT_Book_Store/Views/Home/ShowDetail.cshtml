@@ -1,0 +1,38 @@
+@model FPT_Book_Store.Models.Book
+@{
+    ViewData["Title"] = "ShowDetail";
+}
+
+
+<div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12">
+            <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+                <div class="card-body p-0">
+                    <div class="row g-0">
+                        <div class="col-lg-5 p-5">
+                            <!-- Product image-->
+                            <img class="card-img-top" src="~/Uploads/Item_Image/@Model.Book_Image" alt="..." />
+                        </div>
+                        <div class="col-lg-7 p-5">
+                            <div class="product_description">
+                                <!-- Product name-->
+                                <h5 class="card-title">Book Name: @Model.Book_Name</h5>
+                                <h5 class="card-title">Price: @Model.Book_SalePrice</h5>
+                                <h5 class="card-title">Type: @Model.Category.Category_TypeConfirm</h5>
+                                <h5 class="card-title">Publisher: @Model.Publisher.Publisher_Name</h5>
+                                <h5 class="card-title">Description: @Model.Book_Description</h5>
+                                <hr class="singleline">
+                                <div class="card-body align-self-center">
+                                    <a asp-area="Customer" asp-controller="Cart" asp-action="AddCart" asp-route-id="@Model.Book_ID"
+                                         id="btn-add-to-cart">Add to Cart </a>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

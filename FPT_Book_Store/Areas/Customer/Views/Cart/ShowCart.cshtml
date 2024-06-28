@@ -1,0 +1,127 @@
+@model IEnumerable<Cart>
+@{
+    ViewData["Title"] = "ShowCart";
+}
+
+@{
+   @* decimal total = (decimal) @TempData.Peek("total"); *@
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="icon" type="image/x-icon" href="../image/toy.ico">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="~/css/Owner_Index.css">
+
+</head>
+
+   @* <span class="message"></span> *@
+
+<body>
+   @* <li class="nav-item dropdown">
+      <a class="nav-link" asp-controller="Order" asp-action="View">Order</a>
+   </li> *@
+
+
+   <div class="container" style="text-align: center;">
+
+      @if(TempData["message"] != null){
+
+         <div class="alert alert-success" style="text-align: center; display: inline-table; border-radius: 20px;">
+            <strong style="font-size: 25px;">@TempData["message"]</strong>
+         </div>
+      }
+
+      @if(TempData["error"] != null){
+         <div class="alert alert-success" style="text-align: center; display: inline-table; border-radius: 20px;">
+            <strong style="font-size: 25px;">@TempData["error"]</strong>
+         </div>
+      }
+
+     @* Start table *@
+                  @section Scripts    
+                     {
+
+                  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+                  <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+
+                  <script>
+                     $(document).ready(function() {
+                     $('#example').DataTable({
+                        order: [
+                           [0, 'asc']
+                        ],
+                     });
+                   });
+                  </script>
+            }
+
+
+        <div style="text-align:center; overflow: auto">
+         <a id="btn-order-all-cart" asp-area="Customer" asp-controller="Cart" asp-action="ConfirmFormOrderAll">
+            <i class="fa-solid fa-file-invoice"></i> Order All </a>
+         <p id="total-cart">Total: $@TempData["total"]</p>
+            <table id="example" class="display" style="width:100%">
+                <thead>
+                    <tr >
+                        <th>Name</th>
+                        <th>Image</th>
+                        <th>Quantity</th>
+                        <th>Price</th>                   
+                        <th>Total Price</th>           
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                  @if(Model != null){
+
+                     @foreach(var b in Model){
+                        var total = b.Book.Book_SalePrice * b.Cart_Quantity;
+
+                  <tr id="tr-cart">
+                     <td>@b.Book.Book_Name</td>
+                     <td><img src="~/Uploads/Item_Image/@b.Book.Book_Image" style="width: 100px"></td>
+                     <td>
+                           <a asp-action="UpdateIncrease" asp-route-id="@b.Cart_ID">  <i class="fa-solid fa-circle-plus" id="plus"></i></a>
+                            @b.Cart_Quantity
+                           <a asp-action="UpdateDescrease" asp-route-id="@b.Cart_ID"><i class="fa-solid fa-circle-minus" id="minus"></i>  </a>               
+                     </td>
+                      <td>@b.Book.Book_SalePrice</td>
+                     <td>@total</td>
+                     <td>
+                        <a asp-area="Customer" asp-controller="Cart" asp-action="ConfirmFormOrder" asp-route-id="@b.Cart_ID" id="btn-order-cart"
+                          > <i class="fa-solid fa-file-invoice"></i> Order </a>
+                        <a asp-controller="Cart" asp-action="Delete" asp-route-id="@b.Cart_ID" id="btn-delete-cart"              
+                           onclick="return confirm('Are you sure that you want to delete this?')"> <i class="fa-solid fa-trash"></i> Delete </a>
+                        
+                     </td>
+                  
+                  </tr>
+                  }
+               }
+
+               <tbody>
+
+            </table>
+            <a asp-controller="Home" asp-action="Index" id="btn-back-cart"><i class="fa-solid fa-backward"></i> Back to Home</a>
+        </div>
+
+@* End table *@
+
+   </div>
+
+
+</body>
+
+</html>
+

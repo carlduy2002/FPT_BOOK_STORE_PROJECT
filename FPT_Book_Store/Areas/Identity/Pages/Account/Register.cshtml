@@ -1,0 +1,94 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700;900&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="~/css/register.css">
+    <script src="https://kit.fontawesome.com/df8e5c3257.js" crossorigin="anonymous"></script>
+
+
+
+    <div class="container">
+
+        <form class="form" asp-route-returnUrl="@Model.ReturnUrl" method="post" id="login-form">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form__text">
+                Register
+            </div>
+    
+            <div class="form__group">          
+                <input asp-for="Input.Email" type="email" class="form__input" placeholder="Email" id="email" aria-required="true" />
+                <label asp-for="Input.Email" for="email" class="form__label">Email</label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                <br>
+            </div>
+
+            <div class="form__group">
+                <input asp-for="Input.Password" class="form__input" id="password"class="form__input" placeholder="Password" id="password" aria-required="true" />
+                <label asp-for="Input.Password" class="form__label"></label>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+
+
+            <div class="form__group">
+                <input asp-for="Input.ConfirmPassword" class="form__input" id="password"class="form__input" placeholder="Confirm Password" id="password" aria-required="true" />
+                <label asp-for="Input.ConfirmPassword" class="form__label"></label>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+
+             <div class="form__group">
+                <input asp-for="Input.Account_Address" class="form__input" id="last name"  aria-required="true" placeholder="Address"/>
+                <label asp-for="Input.Account_Address" for="last name" class="form__label"></label>
+                <span asp-validation-for="Input.Account_Address" class="text-danger"></span>
+            </div>
+            
+            @* @if(User.IsInRole("Admin")){ *@
+
+                <div class="form__group">
+                <label asp-for="Input.Role"></label>
+                <select class="form-control" asp-for="Input.Role" asp-items='@new SelectList(Model.GetListRole(), "Name", "Name")'></select>
+                <br>
+            </div>
+            @* } *@
+            
+
+            <div class="form__button">
+                <a href="#" class="btn" onclick="document.getElementById('login-form').submit()">Sign up</a>
+                
+            </div>
+        </form>
+                <div class="from__bottom">
+                    
+                    @if(User.IsInRole("Admin")){
+
+                    <div class="sign">Back Home</div>
+                    <div class="social">
+                        @* <i class="fab fa-facebook-f"></i>
+                        <i class="fab fa-twitter"></i>
+                        <i class="fab fa-google"></i> *@
+                        <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" style="color: #e0a400;"><i class="fa-solid fa-house-chimney"></i></a>
+                    </div>
+
+                }else{
+                
+                        <div class="sign">Sign in with</div>
+                        <div class="social">
+                            <i class="fab fa-facebook-f"></i>
+                            <i class="fab fa-twitter"></i>
+                            <i class="fab fa-google"></i>
+                    </div>
+                }
+                    </div>
+                    
+                    
+    </div>
+        
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

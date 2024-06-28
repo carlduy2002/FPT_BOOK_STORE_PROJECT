@@ -1,0 +1,116 @@
+@model IEnumerable<Order>
+@using FPT_Book_Store.Constants
+@{
+    ViewData["Title"] = "ViewOrder";
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="icon" type="image/x-icon" href="../image/toy.ico">
+   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
+
+  
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="~/css/Owner_Index.css">
+
+</head>
+
+
+<body>
+
+   <div class="container">
+
+@* Start table *@
+         @section Scripts    
+                {
+
+                     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+                     <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+
+                     <script>
+                        $(document).ready(function() {
+                        $('#example').DataTable({
+                           order: [
+                              [0, 'asc']
+                           ],
+                        });
+                      });
+                     </script>
+                }
+
+
+        <div style="text-align:center; overflow: auto">
+         <a asp-area="Customer" asp-controller="Cart" asp-action="ShowCart" id="btn-order-order-cart"><i class="fa-solid fa-file-invoice"></i> Order</a>
+         <p id="total-cart">Total order: @TempData["totalOrder"]</p>
+            <table id="example" class="display" style="width:100%">
+                <thead>
+                    <tr >
+                        <th>ID</th>
+                        <th>Address</th>          
+                        <th>Phone</th>
+                        <th>Order Date</th>
+                        <th>Delivery Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+         @if (Model != null)
+         {
+            @foreach (var b in Model)
+            {
+                  <tr>
+
+                              <td>@b.Order_ID</td>
+                              <td>@b.Order_Address</td>
+                              <td>@b.Order_Phone</td>
+                              <td>@b.Order_OrderDate</td>
+                              <td>@b.Order_DeliveryDate</td>
+                              <td>@b.Order_Status</td>
+
+                           @if(b.Order_Status == Status.Received.ToString()){
+
+                              <td>
+                                 
+                                 <a  id="btn-cancel-order"> <i class="fa-solid fa-ban"></i> Cancel </a> |
+                                 <a asp-controller="Order" asp-action="Detail" asp-route-id="@b.Order_ID" id="btn-detail-order"><i class="fa-solid fa-circle-info"></i> Details</a>
+
+                              </td>
+                           }else{
+
+                              <td>
+                                 <a asp-controller="Order" asp-action="CancelOrder" asp-route-id="@b.Order_ID" id="btn-delete-cart"              
+                                 onclick="return confirm('Are you sure that you want to cancel this?')"> <i class="fa-solid fa-ban"></i>Cancel </a> | 
+                                 <a asp-controller="Order" asp-action="Detail" asp-route-id="@b.Order_ID" id="btn-detail-order"><i class="fa-solid fa-circle-info"></i> Details</a>
+                              </td>
+                           }
+
+                           
+
+                  </tr>
+            }
+         }
+
+   <tbody>
+
+            </table>
+            <a asp-controller="Home" asp-action="Index" id="btn-back-cart"><i class="fa-solid fa-backward"></i> Back to Home</a>
+        </div>
+
+@* End table *@
+
+   </div>
+
+
+</body>
+
+</html>

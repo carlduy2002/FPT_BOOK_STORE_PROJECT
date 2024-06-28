@@ -1,0 +1,157 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Accounts> SignInManager
+@inject UserManager<Accounts> UserManager
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - FPT_Book_Store</title>
+        <link rel="stylesheet"
+            href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="~/css/layout.css"
+            asp-append-version="true"/>
+        <link rel="icon" type="image/x-icon" href="~/image/logo.ico" asp-append-version="true">
+        <link rel="stylesheet"
+            href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+            <script src="https://kit.fontawesome.com/df8e5c3257.js" crossorigin="anonymous"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="http://fonts.googleapis.com/css?family=Cookie"
+            rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="~/css/footer.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="~/css/search.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
+</head>
+
+
+    <body>
+
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav-bar-layout">
+
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" id="navbar-fpt" asp-controller="Home" asp-action="Index"> <img src="~/image/logo.png" id="img-logo">FPT</a>
+                <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation"><span
+                        class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse"
+                    id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                         <form id="search-form" asp-action="SearchBookName" asp-controller="Home" method="POST">
+                             <input type="text"  name="Book_Name" placeholder="Search Book Name...">
+                                <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </form>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index"><i class="fa-solid fa-house"></i> Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" asp-controller="Home" asp-action="Help"><i class="fa-brands fa-hire-a-helper"></i> Help</a>
+                        </li>
+                    @if (User.IsInRole("User"))
+                    {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" asp-area="Customer" asp-controller="Order" asp-action="ViewOrder"><i class="fa-solid fa-file-invoice"></i> Order</a>
+                                </li>
+                    }
+
+
+                    <ul class="navbar-nav">
+
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        String username = User.Identity?.Name;
+                        String[] arrayUsername = username.Split('@');
+                        String resultUsername = arrayUsername[0];
+
+
+                            <li class="nav-item dropdown">
+                               <marquee style="margin-right: 30px; margin-top: 18px;">
+                               <a class="nav-link" asp-area="Identity" 
+                                asp-page="/Account/Manage/Index" title="Manage">Hello
+                                    @resultUsername <i class="fa-solid fa-hand-spock"></i></a>
+                                    </marquee>
+                            </li>
+
+                                <li class="nav-item dropdown">
+
+                                    <a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="ShowCart"
+                                    id="logoutandlogin"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
+                                </li>     
+
+                                <li class="nav-item dropdown">
+                                    <form class="form-inline" asp-area="Identity"
+                                asp-page="/Account/Logout"
+                                asp-route-returnUrl="@Url.Action("Index",
+                                "Home", new { area = "" })" id="form-logout">
+                                        <a  class="nav-link" id="logoutandlogin" onclick="document.getElementById('form-logout').submit()"><i class="fa-solid fa-person-through-window"></i> Logout</a>
+                                    </form>
+                                </li>
+                    }
+                    else
+                    {
+                                <li class="nav-item dropdown">
+
+                                    <a class="nav-link " asp-area="Identity"
+                                asp-page="/Account/Register" id="logoutandlogin"><i class="fa-solid fa-registered"></i> Register</a>
+                                </li>                 
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" id="logoutandlogin" asp-area="Identity"
+                                asp-page="/Account/Login"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+                                </li>
+                                
+                    }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+
+
+        <div class="container">
+            <main role="main" class="pb-3">
+            @RenderBody()
+            </main>
+        </div>
+
+
+        <footer class="footer-distributed">
+
+            <div class="footer-left">
+                <h3>FPT<span> BOOK</span></h3>
+
+                <p class="footer-company-name">Copyright © 2023 <strong>FPT</strong>
+                    All rights reserved</p>
+            </div>
+
+            <div class="footer-center">
+                <div>
+                @* <i class="fa fa-map-marker"></i> *@
+<p><span>Book Store</span>
+                        FPT</p>
+                </div>
+
+                <div>
+                @* <i class="fa fa-phone"></i> *@
+                    <p>093 310 85 54</p>
+                </div>
+                <div>
+                @* <i class="fa fa-envelope"></i> *@
+                    <p><a href="https://greenwich.edu/">fptbookstore@gmail.com</a></p>
+                </div>
+            </div>
+        </footer>
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    </body>
+</html>

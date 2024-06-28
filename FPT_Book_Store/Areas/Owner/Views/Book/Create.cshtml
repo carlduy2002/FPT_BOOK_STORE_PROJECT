@@ -1,0 +1,401 @@
+@{
+    ViewData["Title"] = "Create";
+}
+
+@model Book
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../image/toy.ico">
+    <link rel="stylesheet" href="~/css/Owner_Index.css">
+
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="~/css/Owner_Index.css">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <!-- Favicons -->
+    <link href="~/assets/img/favicon.png" rel="icon">
+    <link href="~/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="~/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="~/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="~/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="~/css/style.css" rel="stylesheet">
+
+    <!-- =======================================================
+  * Template Name: NiceAdmin - v2.5.0
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+
+        <div class="d-flex align-items-center justify-content-between">
+        <i class="bi bi-list toggle-sidebar-btn"></i>
+
+         </a>
+         <a class="logo d-flex align-items-center" asp-area="Identity"
+            asp-page="/Account/Manage/Index" title="Manage"><span class="d-none d-lg-block">Hi Owner!</span></a>
+            
+        </div>
+        <!-- End Logo -->
+
+        @* <div class="search-bar">
+        <form class="search-form d-flex align-items-center" method="POST" action="#">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+        </form>
+        </div> *@
+        <!-- End Search Bar -->
+
+
+    </header>
+    <!-- End Header -->
+
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+
+        <ul class="sidebar-nav" id="sidebar-nav">
+
+             <li class="nav-item">
+             <a class="nav-link " asp-area="Owner" asp-controller="Dashboard" asp-action="Index">
+               <i class="bi bi-grid"></i>
+               <span>Dashboard</span>
+            </a>
+         </li>
+         <li class="nav-item">
+            <a class="nav-link collapsed" asp-area="Owner" asp-controller="Book" asp-action="Index">
+               <i class="bi bi-file-earmark"></i>
+               <span>Manage Book</span>
+            </a>
+         </li>
+
+         <li class="nav-item">
+            <a class="nav-link collapsed" asp-area="Owner" asp-controller="Order" asp-action="ShowOrder">
+               <i class="bi bi-file-earmark"></i>
+               <span>Manage Order</span>
+            </a>
+         </li>
+         <li class="nav-item">
+            <a class="nav-link collapsed" asp-area="Owner" asp-controller="Category" asp-action="Index">
+               <i class="bi bi-file-earmark"></i>
+               <span>Manage Category</span>
+            </a>
+         </li>
+         <li class="nav-item">
+            <a class="nav-link collapsed" asp-area="Owner" asp-controller="Publisher" asp-action="Index">
+               <i class="bi bi-file-earmark"></i>
+               <span>Manage Publisher</span>
+            </a>
+         </li>
+         <li class="nav-item">
+            <a class="nav-link collapsed" href="pages-login.html">
+               <form class="nav-link collapsed" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index",
+                                "Home", new { area = "" })">
+                  <button type="submit" class="nav-link btn
+                                    btn-link" id="logoutandlogin">Logout</button>
+               </form>
+            </a>
+         </li>
+        </ul>
+
+    </aside>
+    <!-- End Sidebar-->
+
+    <main id="main" class="main">
+        <!-- End Page Title -->
+
+        <section class="section dashboard">
+            <div class="col-xxl-4 col-xl-12">
+
+            </div>
+            <!-- End Customers Card -->
+
+            <!-- Reports -->
+            <div class="col-12">
+
+            </div>
+            <!-- End Reports -->
+
+            <!-- Recent Sales -->
+            <div class="col-12">
+                <div class="card recent-sales overflow-auto">
+
+                    <div class="card-body">
+                        <div class="container">
+                            <div class="product-display">
+                                <div class="container">
+
+                                    <div class="admin-product-form-container">
+                                        @if(TempData["message"] != null){
+                                            <div class="alert alert-success" style="text-align: center; display: inline-table; border-radius: 20px; margin-left: 133px">
+                                                <strong style="font-size: 25px;">@TempData["message"]</strong>
+                                            </div>
+                                        }
+                                        <form enctype="multipart/form-data" asp-area="Owner" method="POST"
+                                            asp-controller="Book" asp-action="Create">
+                                            <h3>Add book</h3>
+
+                                            <div class="form-group">
+                                                <label>Book Name</label>
+                                                <input asp-for="Book_Name" class="form-control" required/>
+                                                <span asp-validation-for="Book_Name" class="text-danger"></span>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Quantity</label>
+                                                <input asp-for="Book_Quantity" class="form-control" required/>
+                                                <span asp-validation-for="Book_Quantity" class="text-danger"></span>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Original Price</label>
+                                                <input asp-for="Book_OriginalPrice" class="form-control" required/>
+                                                <span asp-validation-for="Book_OriginalPrice"
+                                                    class="text-danger"></span>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Sale Price</label>
+                                                <input asp-for="Book_SalePrice" class="form-control" required/>
+                                                <span asp-validation-for="Book_SalePrice" class="text-danger"></span>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Description</label>
+                                                <input asp-for="Book_Description" class="form-control" />
+                                                <span asp-validation-for="Book_Description" class="text-danger"></span>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="col-md-10">
+                                                    <p>Upload one files using this form:</p>
+                                                    <input type="file" asp-for="Book_Image" multiple />
+                                                </div>
+                                                @* @if(TempData["message"] != null){
+                                                    <div class="alert alert-success" style="text-align: center; display: inline-table; border-radius: 20px;">
+                                                        <strong style="font-size: 25px;">@TempData["message"]</strong>
+                                                    </div>
+                                                } *@
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Publisher</label>
+                                                @* <select asp-for="Publisher_ID" class="form-control"
+                                                    asp-items="ViewBag.Publisher_ID"></select> *@
+                                                <select asp-for="Publisher_ID" class="form-control">
+                                                    @foreach (var item in ViewData["Publisher"] as IEnumerable<Publisher>)
+                                                    {
+                                                        <option value="@item.Publisher_ID">@item.Publisher_Name</option>
+                                                    }
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Category</label>
+                                                <select asp-for="Category_ID" class="form-control">
+                                                    @foreach (var item in ViewData["Category"] as IEnumerable<Category>)
+                                                    {
+                                                        <option value="@item.Category_ID">@item.Category_TypeConfirm</option>
+                                                    }
+                                                </select>
+                                            </div>
+
+                                            <input type="submit" id="btn-add-add-book" value="add">
+                                        </form>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- End Recent Sales -->
+            </div>
+            </div>
+            <!-- End Left side columns -->
+            </div>
+            <!-- End Right side columns -->
+            </div>
+        </section>
+
+    </main>
+    <!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+        @* <div class="copyright">
+        &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+        </div> *@
+        <div class="credits">
+            <!-- All the links in the footer should remain intact. -->
+            <!-- You can delete the links only if you purchased the pro version. -->
+            <!-- Licensing information: https://bootstrapmade.com/license/ -->
+            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+            @* Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> *@
+        </div>
+    </footer>
+    <!-- End Footer -->
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="~/assets/vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/vendor/chart.js/chart.umd.js"></script>
+    <script src="~/assets/vendor/echarts/echarts.min.js"></script>
+    <script src="~/assets/vendor/quill/quill.min.js"></script>
+    <script src="~/assets/vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="~/assets/vendor/tinymce/tinymce.min.js"></script>
+    <script src="~/assets/vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="~/assets/js/main.js"></script>
+
+</body>
+
+</html>
+
+
+
+@*
+@{
+ViewData["Title"] = "Create";
+}
+
+@model Book
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="../image/toy.ico">
+<title>Add Publisher</title>
+
+<!-- font awesome cdn link -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<!-- custom css file link -->
+<link rel="stylesheet" href="~/css/Owner_Index.css">
+
+</head>
+
+<body>
+
+<span class="message"></span>
+
+
+<div class="container">
+
+<div class="admin-product-form-container">
+
+<form enctype="multipart/form-data" asp-area="Owner" method="POST" asp-controller="Book" asp-action="Create">
+<h3>Add a new Book</h3>
+
+<div class="form-group">
+<label>Book Name</label>
+<input asp-for="Book_Name" class="form-control" />
+<span asp-validation-for="Book_Name" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+<label>Quantity</label>
+<input asp-for="Book_Quantity" class="form-control" />
+<span asp-validation-for="Book_Quantity" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+<label>Original Price</label>
+<input asp-for="Book_OriginalPrice" class="form-control" />
+<span asp-validation-for="Book_OriginalPrice" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+<label>Sale Price</label>
+<input asp-for="Book_SalePrice" class="form-control" />
+<span asp-validation-for="Book_SalePrice" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+<label>Description</label>
+<input asp-for="Book_Description" class="form-control" />
+<span asp-validation-for="Book_Description" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+<div class="col-md-10">
+<p>Upload one files using this form:</p>
+<input type="file" asp-for="Book_Image" multiple />
+</div>
+</div>
+
+<div class="form-group">
+<label>Date add Book</label>
+<input type="date" asp-for="Book_Date" class="form-control" />
+<span asp-validation-for="Book_Date" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+<label>Publisher</label>
+<select asp-for="Publisher_ID" class="form-control" asp-items="ViewBag.Publisher_ID"></select>
+</div>
+
+<div class="form-group">
+<label>Category</label>
+<select asp-for="Category_ID" class="form-control">
+@foreach (var item in ViewData["Category"] as IEnumerable<Category>)
+{
+<option value="@item.Category_ID">@item.Category_Type</option>
+}
+</select>
+</div>
+
+<input type="submit" class="btn" value="add">
+<a asp-controller="Book" asp-action="Index" class="btn">Go back!</a>
+</form>
+
+</div>
+
+</div>
+
+
+
+</body>
+
+</html>
+
+@section Scripts {
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} *@

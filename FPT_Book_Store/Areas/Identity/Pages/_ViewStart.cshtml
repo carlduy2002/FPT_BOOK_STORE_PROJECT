@@ -1,0 +1,18 @@
+﻿
+@inject SignInManager<Accounts> SignInManager
+
+
+
+@{
+    if (User.IsInRole("User")  || (!SignInManager.IsSignedIn(User)))
+    {
+
+        Layout = "/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "_Owner_Layout";
+    }
+
+}

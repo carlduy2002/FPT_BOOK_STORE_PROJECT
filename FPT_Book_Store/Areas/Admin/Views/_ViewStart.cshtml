@@ -1,0 +1,10 @@
+﻿@{
+    if(User.IsInRole("User")){
+        
+        Layout = "_Layout";
+    }else{
+
+        Layout = "_Owner_Layout";
+    }
+    
+}

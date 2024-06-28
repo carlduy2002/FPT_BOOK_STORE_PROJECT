@@ -1,0 +1,92 @@
+@model IEnumerable<Cart>
+
+@{
+    ViewData["Title"] = "ConfirmFormOrderAll";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="icon" type="image/x-icon" href="../image/toy.ico">
+
+
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="~/css/Owner_Index.css">
+
+</head>
+
+
+<body>
+
+   <div class="container">
+
+       <div class="admin-product-form-container">
+
+                                            <form asp-area="Customer" method="POST" asp-controller="Cart" asp-action="OrderAll">
+
+                                                <h3>Order All Books</h3> 
+                                                <div class="form-group">
+                                                    
+                                            @foreach (var c in Model)
+                                                    {                                                                  
+                                                <div id="div-order-all">
+
+                                                    <div class="form-group">
+                                                    <label>Book Name</label>
+                                                    <input asp-for="@c.Book.Book_Name" class="form-control"  disabled/>
+                                                    <span  class="text-danger"></span>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                    <label>Category</label>
+                                                    <input asp-for="@c.Book.Category.Category_Type" class="form-control"  disabled/>
+                                                    <span  class="text-danger"></span>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                    <label>Quantity</label>
+                                                    <input asp-for="@c.Cart_Quantity" class="form-control"  disabled/>
+                                                    <span  class="text-danger"></span>
+                                                    </div>
+
+                                                </div>
+                                                    
+                                                }                                     
+
+                                    @if (ViewData["user"] != null){
+
+                                        @foreach(var a in ViewData["user"] as IEnumerable<Accounts>){
+                                            
+                                                <div class="form-group">
+                                                    <label>Address</label>
+                                                    <input class="form-control" name="address" value="@a.Account_Address"  required placeholder="Enter Address"/>
+                                                    <span  class="text-danger"></span>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Phone</label>
+                                                    <input class="form-control" name="phone" value="@a.PhoneNumber" required placeholder="Enter Phone"/>
+                                                    <span class="text-danger"></span>
+                                                </div>
+                                            }
+                                               
+                                     }    
+                                                <input type="submit" id="btn-add-order" value="Order">
+                                                 <a asp-action="ShowCart" id="btn-back-book"><i class="fa-solid fa-backward"></i> Back</a>
+                                            </form>
+
+
+                                    </div>
+
+   </div>
+
+
+</body>
+
+</html>

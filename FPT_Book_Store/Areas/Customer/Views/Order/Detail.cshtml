@@ -1,0 +1,91 @@
+@model IEnumerable<OrderDetail>
+@{
+    ViewData["Title"] = "Detail";
+}
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="icon" type="image/x-icon" href="../image/toy.ico">
+
+  
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="~/css/Owner_Index.css">
+
+</head>
+
+
+<body>
+
+   <div class="container">
+
+@* Start table *@
+         @section Scripts    
+                {
+
+                     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+                     <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+
+                     <script>
+                        $(document).ready(function() {
+                        $('#example').DataTable({
+                           order: [
+                              [0, 'asc']
+                           ],
+                        });
+                      });
+                     </script>
+                }
+
+
+        <div style="text-align:center; overflow: auto">
+         <a asp-area="Customer" asp-controller="Cart" asp-action="ShowCart" id="btn-order-order-cart"><i class="fa-solid fa-file-invoice"></i> Order</a>
+            <table id="example" class="display" style="width:100%">
+                <thead>
+                    <tr >
+                        <th>Order ID</th>          
+                        <th>Book ID</th>
+                        <th>Book Image</th>
+                        <th>Book Name</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+         @if (Model != null)
+         {
+            @foreach (var b in Model)
+            {
+                  <tr>
+                     <td>@b.Order_ID</td>
+                     <td>@b.Book_ID</td>
+                     <td><img src="~/Uploads/Item_Image/@b.Book.Book_Image" style="width: 100px"></td>
+                     <td>@b.Book.Book_Name</td>
+                     <td>@b.OrderDetail_Quantity</td>
+                  </tr>
+            }
+         }
+
+   <tbody>
+
+            </table>
+            <a asp-area="Customer" asp-controller="Order" asp-action="ViewOrder" id="btn-back-cart"><i class="fa-solid fa-backward"></i> Back</a>
+        </div>
+
+@* End table *@
+
+   </div>
+
+
+</body>
+
+</html>
